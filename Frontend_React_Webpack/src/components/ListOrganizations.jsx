@@ -46,7 +46,7 @@ class ListOrganizations extends Component {
                 this.setState({totalItemsCount: totalItemsCount});
                 this.setState({itemsCountPerPage: itemsCountPerPage});
                 this.setState({
-                    activePage: page,
+                    activePage: page+1,
                     searchName: name,
                     sizePage: size
                 });
@@ -195,11 +195,14 @@ class ListOrganizations extends Component {
                 </div>
                 <div className="d-flex justify-content-center">
                     <Pagination
-                    hideNavigation
+                    // hideNavigation
+                    // hideDisabled
+                    // prevPageText={"prev"}
+                    // nextPageText={"next"}
                     activePage={this.state.activePage}
                     itemsCountPerPage={this.state.itemsCountPerPage}
                     totalItemsCount={this.state.totalItemsCount}
-                    pageRangeDisplayed={4}
+                    pageRangeDisplayed={3}
                     itemClass='page-item'
                     linkClass='btn btn-light'
                     onChange={this.handlePageChange}

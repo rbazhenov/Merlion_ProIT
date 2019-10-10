@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './styles/App.css';
-import InstructorApp from './components/pagination/InstructorApp.jsx';
+import InstructorApp from './components/navigation/InstructorApp.jsx';
 import { BrowserRouter } from 'react-router-dom';
 
 class App extends Component {
