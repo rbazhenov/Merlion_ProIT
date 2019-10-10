@@ -1,0 +1,27 @@
+insert into organization (id,name, main_organization_id) VALUES (0,'-', null);
+insert into organization (name, main_organization_id) VALUES ('Google', 0);
+insert into organization (name, main_organization_id) VALUES ('Goog', 1);
+insert into organization (name, main_organization_id) VALUES ('Yandex', 0);
+insert into organization (name, main_organization_id) VALUES ('Yand', 3);
+insert into organization (name, main_organization_id) VALUES ('Go', 2);
+insert into organization (name, main_organization_id) VALUES ('G', 2);
+insert into organization (name, main_organization_id) VALUES ('got', 6);
+insert into organization (name, main_organization_id) VALUES ('gotik', 7);
+insert into organization (name, main_organization_id) VALUES ('Yande', 3);
+insert into organization (name, main_organization_id) VALUES ('Ya', 4);
+insert into organization (name, main_organization_id) VALUES ('Yan', 4);
+
+insert into worker (id, name, main_worker_id, organization_id) VALUES (0, '-', null,0);
+insert into worker (name, main_worker_id, organization_id) VALUES ('directorGoogle', 0,1);
+insert into worker (name, main_worker_id, organization_id) VALUES ('internGoogle', 1, 1);
+insert into worker (name, main_worker_id, organization_id) VALUES ('directorGoo', 0,2);
+insert into worker (name, main_worker_id, organization_id) VALUES ('internGoo', 3, 2);
+insert into worker (name, main_worker_id, organization_id) VALUES ('directorYandex', 0, 3);
+insert into worker (name, main_worker_id, organization_id) VALUES ('internYandex', 5, 3);
+insert into worker (name, main_worker_id, organization_id) VALUES ('directorYand', 0, 4);
+insert into worker (name, main_worker_id, organization_id) VALUES ('internYand', 7, 4);
+insert into worker (name, main_worker_id, organization_id) VALUES ('No name 1', 2, 1);
+insert into worker (name, main_worker_id, organization_id) VALUES ('No name 2', 2, 1);
+insert into worker (name, main_worker_id, organization_id) VALUES ('intern1', 3, 2);
+insert into worker (name, main_worker_id, organization_id) VALUES ('intern2', 11, 2);
+insert into worker (name, main_worker_id, organization_id) VALUES ('intern3', 11, 2);
