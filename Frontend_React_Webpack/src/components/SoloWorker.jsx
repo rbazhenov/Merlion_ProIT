@@ -67,7 +67,10 @@ class SoloWorker extends Component {
 
     selectOrganization (event){
         if(event.target.value =="" && this.state.defaultOrganization!=""){
-            this.setState({selectedOrganization:this.state.defaultOrganization})
+            this.setState({
+                selectedOrganization:this.state.defaultOrganization,
+                selectedMainWorker: this.state.defaultMainWorker
+            })
         }
         else {
             this.setState({
@@ -94,13 +97,13 @@ class SoloWorker extends Component {
         this.props.history.push('/workers')
     }
     handleDelete(){
-        var id = this.state.id;
+        const id = this.state.id;
         axios.delete(`http://localhost:8080/workers/id/${id}`)
-        .then(response => {
-            console.log(response.status);
-            console.log("Delete of worker successful");
-            this.props.history.push('/workers');
-        })
+            .then(response => {
+                console.log(response.status);
+                console.log("Delete of worker successful");
+                this.props.history.push('/workers');
+            })
         .catch(
             error => {this.errors = [];
             console.log(error.response);
@@ -110,6 +113,13 @@ class SoloWorker extends Component {
     }
 
     validate(values) {
+        let worker = {
+            id: this.state.id,
+            name: values.name,
+            mainWorkerId: this.state.selectedMainWorker,
+            organizationId: this.state.selectedOrganization
+        };
+
         let errors = {};
         if (!values.name) {
             errors.name = 'Enter a Name'
@@ -117,6 +127,17 @@ class SoloWorker extends Component {
         else if(this.state.selectedOrganization==null){
             errors.name = 'Choose organization'
         }
+
+        //это должно быть в onSubmit, но там catch не работает
+        axios.put(`http://localhost:8080/workers/id/${this.state.id}`,worker)
+            .then(() =>{
+                this.props.history.push('/workers');
+            })
+            .catch(error=> {
+                console.log(error.response);
+                this.setState({message: 'Worker organization cannot be updated because he has got a child'})
+            });
+
         return errors
     }
 
@@ -130,9 +151,6 @@ class SoloWorker extends Component {
 
         if (this.state.id == -1) {
             WorkerDataService.createWorker(worker)
-                .then(() => this.props.history.push('/workers'))
-        } else {
-            WorkerDataService.updateWorker(this.state.id, worker)
                 .then(() => this.props.history.push('/workers'))
         }
     }

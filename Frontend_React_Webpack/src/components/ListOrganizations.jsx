@@ -202,7 +202,7 @@ class ListOrganizations extends Component {
                     activePage={this.state.activePage}
                     itemsCountPerPage={this.state.itemsCountPerPage}
                     totalItemsCount={this.state.totalItemsCount}
-                    pageRangeDisplayed={3}
+                    pageRangeDisplayed={4}
                     itemClass='page-item'
                     linkClass='btn btn-light'
                     onChange={this.handlePageChange}

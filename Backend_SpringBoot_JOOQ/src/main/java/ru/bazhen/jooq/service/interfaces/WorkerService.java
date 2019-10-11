@@ -20,7 +20,7 @@ public interface WorkerService {
     @Transactional
     void createWorker(WorkerExtraDTO workerTreeDTO);
     @Transactional
-    void updateWorker(WorkerExtraDTO workerTreeDTO, int id);
+    ResponseEntity<Void> updateWorker(WorkerExtraDTO workerTreeDTO, int id);
     @Transactional
     ResponseEntity<Void> deleteWorker(int id);
 }

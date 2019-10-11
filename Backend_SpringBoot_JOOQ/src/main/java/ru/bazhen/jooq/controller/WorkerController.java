@@ -44,8 +44,8 @@ public class WorkerController {
     }
 
     @PutMapping ("/workers/id/{id}")
-    public void updateWorker(@RequestBody WorkerExtraDTO workerExtraDTO, @PathVariable int id) {
-        workerService.updateWorker(workerExtraDTO,id);
+    public ResponseEntity<Void> updateWorker(@RequestBody WorkerExtraDTO workerExtraDTO, @PathVariable int id) {
+        return workerService.updateWorker(workerExtraDTO,id);
     }
 
     @DeleteMapping("/workers/id/{id}")

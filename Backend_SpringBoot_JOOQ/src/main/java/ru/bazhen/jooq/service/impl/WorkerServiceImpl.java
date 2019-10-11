@@ -136,9 +136,18 @@ public class WorkerServiceImpl implements WorkerService {
 
     @Override
     @Transactional
-    public void updateWorker(WorkerExtraDTO workerExtraDTO, int id) {
+    public ResponseEntity<Void> updateWorker(WorkerExtraDTO workerExtraDTO, int id) {
         Worker w = Worker.WORKER.as("w");
         Organization o = Organization.ORGANIZATION.as("o");
+        Optional<WorkerRecord> ChildWorker = Optional.ofNullable(this
+                .create.fetchAny(w,w.MAIN_WORKER_ID.eq(id)));
+        WorkerExtraDTO oldWorker = this
+                .create.fetchOne(w, w.ID.eq(id)).into(WorkerExtraDTO.class);
+
+        if (ChildWorker.isPresent() && !workerExtraDTO.getOrganizationId().equals(oldWorker.getOrganizationId())){
+            return ResponseEntity.notFound().build();
+        }
+        else
             this.create
                     .update(w)
                     .set(w.NAME, workerExtraDTO.getName())
@@ -146,6 +155,7 @@ public class WorkerServiceImpl implements WorkerService {
                     .set(w.ORGANIZATION_ID, workerExtraDTO.getOrganizationId())
                     .where(w.ID.eq(id))
                     .execute();
+        return ResponseEntity.ok().build();
     }
 
     @Override
