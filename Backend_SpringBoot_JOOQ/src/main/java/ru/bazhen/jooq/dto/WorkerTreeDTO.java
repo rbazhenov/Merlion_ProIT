@@ -2,10 +2,7 @@ package ru.bazhen.jooq.dto;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WorkerTreeDTO {
-    private Integer id;
-    private String  name;
-    private Integer mainWorkerId;
+public class WorkerTreeDTO extends WorkerDTO{
     private WorkerTreeDTO parent;
     private List<WorkerTreeDTO> children;
 
@@ -15,33 +12,8 @@ public class WorkerTreeDTO {
     }
 
     public WorkerTreeDTO(Integer id, String name, List<WorkerTreeDTO> children) {
-        this.id = id;
-        this.name = name;
+        super(id, name);
         this.children = children;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getMainWorkerId() {
-        return mainWorkerId;
-    }
-
-    public void setMainWorkerId(Integer mainWorkerId) {
-        this.mainWorkerId = mainWorkerId;
     }
 
     public WorkerTreeDTO getParent() {
@@ -67,7 +39,7 @@ public class WorkerTreeDTO {
 
     @Override
     public String toString() {
-        return "Organization [id=" + id + ", parentId=" + mainWorkerId + ", name=" + name + ", children="
-                + children + "]";
+        return "Organization [id=" + getId() + ", parentId=" + getMainWorkerId()
+                + ", name=" + getName() + ", children=" + children + "]";
     }
 }

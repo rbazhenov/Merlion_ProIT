@@ -2,10 +2,7 @@ package ru.bazhen.jooq.dto;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrganizationTreeDTO {
-    private Integer id;
-    private String name;
-    private Integer mainOrganizationId;
+public class OrganizationTreeDTO extends OrganizationDTO{
     private OrganizationTreeDTO parent;
     private List<OrganizationTreeDTO> children;
 
@@ -15,33 +12,8 @@ public class OrganizationTreeDTO {
     }
 
     public OrganizationTreeDTO(Integer id, String name, List<OrganizationTreeDTO> children) {
-        this.id = id;
-        this.name = name;
+        super(id,name);
         this.children = children;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getMainOrganizationId() {
-        return mainOrganizationId;
-    }
-
-    public void setMainOrganizationId(Integer mainOrganizationId) {
-        this.mainOrganizationId = mainOrganizationId;
     }
 
     public OrganizationTreeDTO getParent() {
@@ -67,7 +39,7 @@ public class OrganizationTreeDTO {
 
     @Override
     public String toString() {
-        return "Organization [id=" + id + ", parentId=" + mainOrganizationId + ", name=" + name + ", children="
-                + children + "]";
+        return "Organization [id=" + getId() + ", parentId=" + getMainOrganizationId()
+                + ", name=" + getName() + ", children=" + children + "]";
     }
 }

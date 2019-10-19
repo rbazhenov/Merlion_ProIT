@@ -37,7 +37,7 @@ public class WorkerServiceImpl implements WorkerService {
         Worker w2 = Worker.WORKER.as("w2");
 
         List<WorkerExtraDTO> orgEntries = this.create
-                .select(w.ID, w.NAME, w.ORGANIZATION_ID, o.NAME.as("organizationName"),w.MAIN_WORKER_ID, (create
+                .select(w.ID, w.NAME, w.ORGANIZATION_ID, w.MAIN_WORKER_ID, o.NAME.as("organizationName"), (create
                         .select(w2.NAME)
                         .from(w2)
                         .where(w.MAIN_WORKER_ID.eq(w2.ID))).asField("mainWorkerName"))
@@ -79,7 +79,7 @@ public class WorkerServiceImpl implements WorkerService {
         Worker w = Worker.WORKER.as("w");
         Worker w2 = Worker.WORKER.as("w2");
         List<WorkerExtraDTO> orgEntries = this.create
-                .select(w.ID, w.NAME, w.ORGANIZATION_ID, o.NAME.as("organizationName"),w.MAIN_WORKER_ID, (create
+                .select(w.ID, w.NAME, w.ORGANIZATION_ID,w.MAIN_WORKER_ID, o.NAME.as("organizationName"), (create
                         .select(w2.NAME)
                         .from(w2)
                         .where(w.MAIN_WORKER_ID.eq(w2.ID))).asField("mainWorkerName"))
@@ -103,7 +103,7 @@ public class WorkerServiceImpl implements WorkerService {
         Worker w = Worker.WORKER.as("w");
         Worker w2 = Worker.WORKER.as("w2");
         return this.create
-                .select(w.ID, w.NAME, w.ORGANIZATION_ID, o.NAME.as("organizationName"),w.MAIN_WORKER_ID, (create
+                .select(w.ID, w.NAME, w.ORGANIZATION_ID, w.MAIN_WORKER_ID, o.NAME.as("organizationName"),(create
                         .select(w2.NAME)
                         .from(w2)
                         .where(w.MAIN_WORKER_ID.eq(w2.ID))).asField("mainWorkerName"))
