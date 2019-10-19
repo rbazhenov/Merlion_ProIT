@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.bazhen.jooq.dto.OrganizationDTO;
 import ru.bazhen.jooq.dto.OrganizationTreeDTO;
 import ru.bazhen.jooq.dto.OrganizationExtraDTO;
 import ru.bazhen.jooq.service.interfaces.OrganizationService;
@@ -29,12 +30,12 @@ public class OrganizationServiceImpl implements OrganizationService {
 
     @Transactional(readOnly = true)
     @Override
-    public Page<OrganizationExtraDTO> findByOrganizationName(String searchName, Pageable pageable){
+    public Page<OrganizationDTO> findByOrganizationName(String searchName, Pageable pageable){
         String name =(searchName.equals("")) ? searchName : "(?i)^"+searchName+".*";
         Organization o = Organization.ORGANIZATION.as("o");
         Organization o2 = Organization.ORGANIZATION.as("o2");
         Worker w = Worker.WORKER.as("w");
-        List<OrganizationExtraDTO> orgEntries = this.create
+        List<OrganizationDTO> orgEntries = this.create
                 .select(o.ID,o.NAME,o.MAIN_ORGANIZATION_ID, (this.create
                             .select(o2.NAME)
                             .from(o2)
@@ -57,7 +58,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 
     @Transactional(readOnly = true)
     @Override
-    public Collection<OrganizationTreeDTO> getOrganizationsTree() {
+    public Collection<OrganizationDTO> getOrganizationsTree() {
         Organization o = Organization.ORGANIZATION.as("o");
 
         List<OrganizationTreeDTO> orgs = this.create
@@ -70,13 +71,13 @@ public class OrganizationServiceImpl implements OrganizationService {
 
     @Transactional(readOnly = true)
     @Override
-    public Page<OrganizationExtraDTO> getAllOrganizations(Pageable pageable){
+    public Page<OrganizationDTO> getAllOrganizations(Pageable pageable){
         String name ="^.*";
         Organization o = Organization.ORGANIZATION.as("o");
         Organization o2 = Organization.ORGANIZATION.as("o2");
         Worker w = Worker.WORKER.as("w");
 
-        List<OrganizationExtraDTO> orgEntries = this.create
+        List<OrganizationDTO> orgEntries = this.create
                 .select(o.ID,o.NAME,o.MAIN_ORGANIZATION_ID, (this.create
                                 .select(o2.NAME)
                                 .from(o2)
@@ -98,7 +99,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 
     @Transactional(readOnly = true)
     @Override
-    public OrganizationExtraDTO getOrganization(int id) {
+    public OrganizationDTO getOrganization(int id) {
         Organization o = Organization.ORGANIZATION.as("o");
         Organization o2 = Organization.ORGANIZATION.as("o2");
         Worker w = Worker.WORKER.as("w");
@@ -120,7 +121,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 
     @Override
     @Transactional
-    public void createOrganization(OrganizationExtraDTO organizationExtraDTO) {
+    public void createOrganization(OrganizationDTO organizationExtraDTO) {
         Organization o = Organization.ORGANIZATION.as("o");
             this.create
                     .insertInto(o)
@@ -131,7 +132,7 @@ public class OrganizationServiceImpl implements OrganizationService {
 
     @Override
     @Transactional
-    public void updateOrganization(int id, OrganizationExtraDTO organizationExtraDTO) {
+    public void updateOrganization(int id, OrganizationDTO organizationExtraDTO) {
         Organization o = Organization.ORGANIZATION.as("o");
         Optional<OrganizationRecord> organizationId = Optional.ofNullable(this
                 .create.fetchOne(o, o.ID.eq(id)));
@@ -173,7 +174,7 @@ public class OrganizationServiceImpl implements OrganizationService {
                 .and(Organization.ORGANIZATION.ID.notEqual(0))
         );
     }
-    private static List<OrganizationTreeDTO> createTree(List<OrganizationTreeDTO> nodes) {
+    private static List<OrganizationDTO> createTree(List<OrganizationTreeDTO> nodes) {
         Map<Integer, OrganizationTreeDTO> mapTmp = new HashMap<>();
         for (OrganizationTreeDTO current : nodes) {
             mapTmp.put(current.getId(), current);
@@ -197,12 +198,12 @@ public class OrganizationServiceImpl implements OrganizationService {
                 break;
             }
         }
-        List<OrganizationTreeDTO> result = flatten(root, new ArrayList<>());
+        List<OrganizationDTO> result = flatten(root, new ArrayList<>());
         return result;
     }
-    private static List<OrganizationTreeDTO> flatten(OrganizationTreeDTO orgTreeDTO,  List<OrganizationTreeDTO> flatList) {
+    private static List<OrganizationDTO> flatten(OrganizationTreeDTO orgTreeDTO,  List<OrganizationDTO> flatList) {
         if(flatList.size()<1){
-            OrganizationTreeDTO n = new OrganizationTreeDTO(orgTreeDTO.getId(),orgTreeDTO.getName(), orgTreeDTO.getChildren()); // get rid of children & parent references
+            OrganizationDTO n = new OrganizationTreeDTO(orgTreeDTO.getId(),orgTreeDTO.getName(), orgTreeDTO.getChildren()); // get rid of children & parent references
             flatList.add(n);
         }
         List<OrganizationTreeDTO> children = orgTreeDTO.getChildren();
